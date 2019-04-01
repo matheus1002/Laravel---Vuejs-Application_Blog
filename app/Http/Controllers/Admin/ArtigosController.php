@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Artigo;
+
 class ArtigosController extends Controller
 {
     /**
@@ -19,10 +21,7 @@ class ArtigosController extends Controller
             ["titulo" => "Lista de artigos", "url" => ""]
         ]);
 
-        $listaArtigos = json_encode([
-            ["id" => 1,"titulo" => "PHP OO", "descricao" => "Curso de PHP OO"],
-            ["id" => 2,"titulo" => "Vue JS", "descricao" => "Curso de Vue JS"],
-        ]); 
+        $listaArtigos = Artigo::select('id','titulo','descricao','data')->paginate(2); 
 
         return view('admin.artigos.index', compact('listaMigalhas','listaArtigos'));
     }
@@ -45,7 +44,20 @@ class ArtigosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validacao = \Validator::make($data, [
+            "titulo" => "required",
+            "descricao" => "required",
+            "conteudo" => "required",
+            "data" => "required",
+        ]);
+
+        if($validacao->fails()){
+            return redirect()->back()->withErrors($validacao)->withInput();
+        }
+
+        Artigo::create($data);
+        return redirect()->back();
     }
 
     /**
@@ -56,7 +68,7 @@ class ArtigosController extends Controller
      */
     public function show($id)
     {
-        //
+        return Artigo::find($id);
     }
 
     /**
@@ -79,7 +91,20 @@ class ArtigosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $validacao = \Validator::make($data, [
+            "titulo" => "required",
+            "descricao" => "required",
+            "conteudo" => "required",
+            "data" => "required",
+        ]);
+
+        if($validacao->fails()){
+            return redirect()->back()->withErrors($validacao)->withInput();
+        }
+
+        Artigo::find($id)->update($data);
+        return redirect()->back();
     }
 
     /**
@@ -90,6 +115,7 @@ class ArtigosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Artigo::find($id)->delete();
+        return redirect()->back();
     }
 }
