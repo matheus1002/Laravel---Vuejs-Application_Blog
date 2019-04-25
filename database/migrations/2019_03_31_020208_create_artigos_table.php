@@ -18,7 +18,7 @@ class CreateArtigosTable extends Migration
             $table->string('titulo');
             $table->string('descricao');
             $table->text('conteudo');
-            $table->dateTime('data');
+            $table->date('data');
             $table->timestamps();
             $table->softDeletes();
         });

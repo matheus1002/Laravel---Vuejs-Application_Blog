@@ -16,9 +16,9 @@
             <migalhas v-bind:lista="{{$listaMigalhas}}"></migalhas>
 
             <tabela-lista 
-            v-bind:titulos="['#','Título','Descrição','data']"
+            v-bind:titulos="['#','Título','Descrição','Autor','data']"
             v-bind:itens="{{json_encode($listaArtigos)}}"
-            ordem="desc" ordemcol="1"
+            ordem="desc" ordemcol="0"
             criar="#criar" detalhe="/admin/artigos/" editar="/admin/artigos/" deletar="/admin/artigos/" token="{{ csrf_token() }}"
             modal="sim"
 
@@ -41,11 +41,26 @@
             </div>
             <div class="form-group">
                 <label for="conteudo">Conteúdo</label>
-                <textarea class="form-control" id="conteudo" name="conteudo">{{old('conteudo')}}</textarea>
+                <input type="text" class="form-control" id="conteudo" name="conteudo" placeholder="Conteúdo" value="{{old('conteudo')}}">
             </div>
+
+            <!--
+            <ckeditor
+                id="AddConteudo"
+                name="conteudo"
+                value="{{old('conteudo')}}"
+                v-bind:config="{
+                    toolbar:[
+                        [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ]
+                    ],
+                    height: 200
+                }">
+            </ckeditor>
+            -->
+
             <div class="form-group">
                 <label for="data">Data</label>
-                <input type="datetime-local" class="form-control" id="data" name="data" value="{{old('data')}}">
+                <input type="date" class="form-control" id="data" name="data" value="{{old('data')}}">
             </div>
         </formulario>  
         <span slot="botoes">
@@ -68,7 +83,7 @@
             </div>
             <div class="form-group">
                 <label for="data">Data</label>
-                <input type="datetime" class="form-control" id="data" name="data" v-model="$store.state.item.data">
+                <input type="date" class="form-control" id="data" name="data" v-model="$store.state.item.data">
             </div>
         </formulario>
         <span slot="botoes">
