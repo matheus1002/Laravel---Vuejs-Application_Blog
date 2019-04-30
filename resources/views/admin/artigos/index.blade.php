@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label for="conteudo">Conteúdo</label>
-                <input type="text" class="form-control" id="conteudo" name="conteudo" placeholder="Conteúdo" value="{{old('conteudo')}}">
+                <textarea class="form-control" id="conteudo" name="conteudo">{{old('conteudo')}}</textarea>
             </div>
 
             <!--
